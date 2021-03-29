@@ -25,7 +25,6 @@ function App() {
   return (
     <div className="App">
       <header>
-        <h1>⚛️🔥💬</h1>
         <SignOut />
       </header>
 
@@ -58,7 +57,7 @@ function SignOut(){
 function ChatRoom(){
   const dummy = useRef();
 
-  const messageRef = firestore.collection("message");
+  const messageRef = firestore.collection("messages");
   const query = messageRef.orderBy("createdAt").limit(25);
   const [messages] = useCollectionData(query, { idField: 'id' });
   const [formValue, setFormValue] = useState(" ");
@@ -70,7 +69,7 @@ function ChatRoom(){
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       uid,
       photoURL
-    });
+    })
     setFormValue('');
     dummy.current.scrollIntoView({behavior : "smooth"});
   }
@@ -82,7 +81,7 @@ function ChatRoom(){
     </main>
     <form onSubmit={sendMessage}>
       <input value={formValue} onChange={(e) => setFormValue(e.target.value)} placeholder="say something nice" />
-      <button type="submit" disabled={!formValue}>🕊️</button>
+      <button type="submit" disabled={!formValue}>Send</button>
     </form>
   </>)
 
